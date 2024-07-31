@@ -1,0 +1,29 @@
+Scala
+1.	What is a trait ? when to use ?  example
+	A trait is a concept from object-oriented programming that allows for the composition of classes from reusable sets of methods. Traits are similar to interfaces, but they can provide concrete implementations of methods as well. They are used to share behavior across different classes without using inheritance.
+
+When to Use Traits:
+Multiple Inheritance: When you need to implement multiple inheritance without the diamond problem, traits can be very useful.
+Code Reuse: When you have common functionality that needs to be shared across different, possibly unrelated classes.
+Avoiding Inheritance: When you want to avoid deep inheritance hierarchies and prefer composition over inheritance.
+Modular Design: When you want to design small, modular, reusable components that can be easily mixed into classes
+
+2.	Difference between trait and sealed trait?
+3.	What is an abstract class? 
+4.	What is the difference between  java interface and a scala trait?
+5.	What is a singleton 
+6.	What is a higher order function?
+7.	What is a closure function
+8.	What is a companion object? What are the advantages ? example
+9.	Nil vs Null vs null vs Nothing vs None vs Unit 
+10.	What is pure function?
+11.	What is SBT and how have you used it? 
+12.	What is currying?
+13.	Difference between currying and higher-order functions
+14.	Difference between var and val?
+15.	What is case class?
+16.	Why/when to use case class? Example
+17.	Difference between case class and normal class?
+18.	Scala type hierarchy?
+19.	What are partially applied functions?
+20.	What is tail recursion.

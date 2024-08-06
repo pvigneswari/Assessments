@@ -1,0 +1,38 @@
+1. create customer table with cid PK,name,email,lastChange Timestamp columns.
+Note : whenever the sql table is updated or deleted, the lastChange timestamp column should update to current timestamp.
+
+CREATE TABLE customer (
+    cid INT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    lastChange TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+2. insert 3 records in customers table with id 1,2,3.
+	insert into customer(cid, name, email) values 
+ 	(1, 'John', 'John@gmail.com'),
+	(2, 'Stev', 'Stev@gmail.com'),
+	(3, 'Park', 'Park@gmail.com');
+3. Create customer_backup table same as customer table with same data.
+	create table customer_backup like customer;
+	insert into customer_backup (cid, name, email, lastChange)
+	select cid, name, email, lastChange from customer;
+4. update email of cid=1 in customer table
+	update customer set email = 'Stev2@gmail.com' where cid =1;
+5. delete cid=2 in customer table
+	delete from customer where cid = 2;
+6. Insert cid=4 in customer table
+	insert into customer(cid, name, email) values 
+(4, 'Peter', 'Peter@gmail.com');
+7. Use merge statement to update customer_backup table using customer table.
+	Merge into customer_backup as target
+	using customer as source
+	on target.cid = source.cid
+	when matched then
+	update set
+	target.name = source.name,
+	target.email = source.email,
+	target.lastchange = source.lastchange
+	when not matched by target then
+	insert (cid,name,email,lastchange)
+	values(source.cid, source.name, source.email. source.lastchange);

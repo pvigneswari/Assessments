@@ -8,4 +8,6 @@ def temp_degrees(n):
 
 print(temp_degrees(input))
 
-
+# input = [("London", 15), ("Mumbai", 25)]
+# results = [(city,(temp*(9/5)+32)) for city, temp in input]
+# print(results)

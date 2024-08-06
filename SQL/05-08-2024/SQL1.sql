@@ -1,0 +1,26 @@
+/*The most common SQL Interview Question
+
+
+Given a table Employees with columns emp_id, name, department, and salary, write a query that will give us the third highest salary for each department
+
+rank, dense_rank, and row_number are all window functions
+
+solve the problem with subqueries
+
+window functions require an over clause in order to do what they need to do */
+
+select * from
+(select name, department, salary, 
+rank() over (partition by department order by salary)
+from employees) as ranking
+where ranking.rank = 3
+;
+
+# solve the problem with CTEs
+
+with RankedSalaries as (
+select name, department, salary, 
+rank() over (partition by department order by salary)
+from employees
+)
+select * from RankedSalaries where rank = 3;

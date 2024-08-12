@@ -1,5 +1,5 @@
 input = [("London", 15), ("Mumbai", 25)]
-
+# results = ['ganesh']
 def temp_degrees(arr):
     results = []
     for city in arr:
@@ -7,7 +7,7 @@ def temp_degrees(arr):
         city_data = (city[0], far)
   
         results.append(city_data)
-
     return results
               
 print(temp_degrees(input))
+# print(results)

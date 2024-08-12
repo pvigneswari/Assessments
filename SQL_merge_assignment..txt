@@ -25,14 +25,10 @@ CREATE TABLE customer (
 	insert into customer(cid, name, email) values 
 (4, 'Peter', 'Peter@gmail.com');
 7. Use merge statement to update customer_backup table using customer table.
-	Merge into customer_backup as target
-	using customer as source
-	on target.cid = source.cid
-	when matched then
-	update set
-	target.name = source.name,
-	target.email = source.email,
-	target.lastchange = source.lastchange
-	when not matched by target then
-	insert (cid,name,email,lastchange)
-	values(source.cid, source.name, source.email. source.lastchange);
+	ERGE INTO customer_backup AS backup
+USING customer AS cust
+ON backup.cid = cust.cid
+WHEN MATCHED THEN
+  UPDATE SET name = cust.name, email = cust.email, lastChange = cust.lastChange
+WHEN NOT MATCHED THEN
+  INSERT (cid, name, email, lastChange) VALUES (cust.cid, cust.name, cust.email, cust.lastChange);

@@ -19,7 +19,8 @@ result = word_count.countByKey()
 
 # Print the result
 for word, count in result.items():
-    print(f"{word}: {count}")
+    # print(f"{word}: {count}")
+    print("{}: {}".format(word, count))
 
 # Stop the SparkContext
 sc.stop()

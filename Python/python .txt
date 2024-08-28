@@ -1,0 +1,28 @@
+python: 
+
+Python 
+1.	What is init keyword ?
+2.	What is self keyword ?
+3.	What is lambda functon?
+4.	Difference between lambda and normal function?
+5.	What are generators? When to use ? share one example
+6.	Python is compiled or interpreted language ? what does it mean?
+7.	What is the difference between list and tuples in Python?
+8.	What is the difference between list and set in Python?
+9.	When to use dictionary?
+10.	What are decorators? When to use ? share one example
+11.	What are Iterators?
+12.	What is slicing?
+13.	What is mutable and immutable?
+14.	Python is single thread or multithread?
+15.	What is GIL
+16.	What you don’t like about python?
+17.	What is list Comprehension?
+18.	What are Dunder methods? Give examples
+19.	What does _init_ method do?
+20.	Difference between array and numpy library.
+
+
+
+sql query to get all the employees that have the salary above the average salary of that department
+

@@ -140,16 +140,17 @@ incremental_medical_cost_df.printSchema()
 print("Number of rows in incremental_medical_cost_df:  {}".format(incremental_medical_cost_df.count()))
 
 # Save only top 10 records to Hive tables
-incremental_patients_df.limit(10).write.saveAsTable("julbatch.patients_table")
+incremental_patients_df.limit(10).write.mode("append").saveAsTable("julbatch.patients_table")
 incremental_hospital_treatment_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
-incremental_insurance_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.insurance_table")
-incremental_medical_cost_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.medical_cost_table")
+incremental_insurance_df.limit(10).write.mode("append").saveAsTable("julbatch.insurance_table")
+incremental_medical_cost_df.limit(10).write.mode("append").saveAsTable("julbatch.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
-incremental_patients_df.coalesce(1).write.option("header", "true").csv(output_patient_csv)
-incremental_hospital_treatment_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_hospital_treatment_csv)
-incremental_insurance_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_insurance_csv)
-incremental_medical_cost_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_medical_cost_csv)
+
+incremental_patients_df.coalesce(1).write.mode("append").option("header", "true").csv(output_patient_csv)
+incremental_hospital_treatment_df.coalesce(1).write.mode("append").option("header", "true").csv(output_hospital_treatment_csv)
+incremental_insurance_df.coalesce(1).write.mode("append").option("header", "true").csv(output_insurance_csv)
+incremental_medical_cost_df.coalesce(1).write.mode("append").option("header", "true").csv(output_medical_cost_csv)
 
 
 # Stop the Spark session

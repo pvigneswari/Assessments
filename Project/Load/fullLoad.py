@@ -79,7 +79,7 @@ user = "consultants"                                        # Your PostgreSQL us
 password = "WelcomeItc@2022"                                # Your PostgreSQL password
 
 # Construct JDBC URL
-postgres_url = f"jdbc:postgresql://{host}:{port}/{dbname}"
+postgres_url = "jdbc:postgresql://{0}:{1}/{2}".format(host, port, dbname)
 
 # JDBC properties
 postgres_properties = {

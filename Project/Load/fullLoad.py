@@ -31,7 +31,7 @@ patient_schema = StructType([
     StructField("Address", StringType()),
     StructField("Phone", StringType()),
     StructField("Email", StringType())
-    ])
+])
 
 hospital_treatment_schema = StructType([
     StructField("Patient_id", StringType()),
@@ -65,51 +65,47 @@ hospital_treatment_df = spark.read.option("header", "true").schema(hospital_trea
 insurance_df = spark.read.option("header", "true").schema(insurance_schema).csv(insurance_csv)
 medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema).csv(medical_cost_csv)
 
-# Data Cleaning and Transformation
-# patients_df = patients_df.withColumn("Age", when(col("Age").isNull(), avg("Age").over()).otherwise(col("Age"))) \
-#     .withColumn("Gender", when(upper(col("Gender")).isin("M", "MALE"), "Male")
-#                 .when(upper(col("Gender")).isin("F", "FEMALE"), "Female")
-#                 .otherwise("Unknown"))
-
-# hospital_treatment_df = hospital_treatment_df.withColumn("Start_Date", to_date(col("Start_Date"), "dd/MM/yyyy")) \
-#     .withColumn("End_Date", to_date(col("End_Date"), "dd/MM/yyyy")) \
-#     .withColumn("Cost", regexp_replace(col("Cost"), "[^0-9.]", "").cast(FloatType()))
-
-# insurance_df = insurance_df.withColumn("Coverage_Start_Date", to_date(col("Coverage_Start_Date"), "dd/MM/yyyy")) \
-#     .withColumn("Coverage_End_Date", to_date(col("Coverage_End_Date"), "dd/MM/yyyy"))
-
-# medical_cost_df = medical_cost_df.withColumn("Date", to_date(col("Date"), "dd/MM/yyyy")) \
-#     .withColumn("Amount", regexp_replace(col("Amount"), "[^0-9.]", "").cast(FloatType()))
-
 # Remove duplicates
 patients_df = patients_df.dropDuplicates()
 hospital_treatment_df = hospital_treatment_df.dropDuplicates()
 insurance_df = insurance_df.dropDuplicates()
 medical_cost_df = medical_cost_df.dropDuplicates()
 
-# Save cleaned data to PostgreSQL
-# postgres_url = "jdbc:postgresql://ec2-18-132-73-146.eu-west-2.compute.amazonaws.com:5432/testdb"
+# # Database connection parameters
+# host = "ec2-18-132-73-146.eu-west-2.compute.amazonaws.com"  # Your PostgreSQL server address
+# port = "5432"                                               # Your PostgreSQL port
+# dbname = "testdb"                                           # Your database name
+# user = "consultants"                                        # Your PostgreSQL username
+# password = "WelcomeItc@2022"                                # Your PostgreSQL password
+
+# # Construct JDBC URL
+# postgres_url = f"jdbc:postgresql://{host}:{port}/{dbname}"
+
+# # JDBC properties
 # postgres_properties = {
-#     "user": "consultants",
-#     "password": "WelcomeItc@2022",
+#     "user": user,
+#     "password": password,
 #     "driver": "org.postgresql.Driver"
 # }
 
+# # Save cleaned data to PostgreSQL
 # patients_df.write.jdbc(url=postgres_url, table="patients_table", mode="overwrite", properties=postgres_properties)
 # hospital_treatment_df.write.jdbc(url=postgres_url, table="hospital_treatment_table", mode="overwrite", properties=postgres_properties)
 # insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="overwrite", properties=postgres_properties)
 # medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="overwrite", properties=postgres_properties)
 
 # Save cleaned data to Hive tables
-patients_df.write.mode("overwrite").saveAsTable("ukusjul.patients_table")
-hospital_treatment_df.write.mode("overwrite").saveAsTable("ukusjul.hospital_treatment_table")
-insurance_df.write.mode("overwrite").saveAsTable("ukusjul.insurance_table")
-medical_cost_df.write.mode("overwrite").saveAsTable("ukusjul.medical_cost_table")
+# patients_df.write.mode("overwrite").saveAsTable("medicalcost.db.patients_table")
+# hospital_treatment_df.write.mode("overwrite").saveAsTable("medicalcost.db.hospital_treatment_table")
+# insurance_df.write.mode("overwrite").saveAsTable("medicalcost.db.insurance_table")
+# medical_cost_df.write.mode("overwrite").saveAsTable("medicalcost.db.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
 patients_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_patient_csv)
 hospital_treatment_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_hospital_treatment_csv)
 insurance_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_insurance_csv)
 medical_cost_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_medical_cost_csv)
+patients_df.show()
 
+# Stop the Spark session
 spark.stop()

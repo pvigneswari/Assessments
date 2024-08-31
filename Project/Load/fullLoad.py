@@ -53,6 +53,7 @@ medical_cost_schema = StructType([
     StructField("age", IntegerType()),
     StructField("sex", StringType()),
     StructField("bmi", FloatType()),
+    StructField("children", StringType()),
     StructField("smoker", StringType()),
     StructField("region", StringType()),
     StructField("medical_cost", FloatType()),
@@ -71,34 +72,34 @@ hospital_treatment_df = hospital_treatment_df.dropDuplicates()
 insurance_df = insurance_df.dropDuplicates()
 medical_cost_df = medical_cost_df.dropDuplicates()
 
-# # Database connection parameters
-# host = "ec2-18-132-73-146.eu-west-2.compute.amazonaws.com"  # Your PostgreSQL server address
-# port = "5432"                                               # Your PostgreSQL port
-# dbname = "testdb"                                           # Your database name
-# user = "consultants"                                        # Your PostgreSQL username
-# password = "WelcomeItc@2022"                                # Your PostgreSQL password
+# Database connection parameters
+host = "ec2-18-132-73-146.eu-west-2.compute.amazonaws.com"  # Your PostgreSQL server address
+port = "5432"                                               # Your PostgreSQL port
+dbname = "testdb"                                           # Your database name
+user = "consultants"                                        # Your PostgreSQL username
+password = "WelcomeItc@2022"                                # Your PostgreSQL password
 
-# # Construct JDBC URL
-# postgres_url = f"jdbc:postgresql://{host}:{port}/{dbname}"
+# Construct JDBC URL
+postgres_url = "jdbc:postgresql://{0}:{1}/{2}".format(host, port, dbname)
 
-# # JDBC properties
-# postgres_properties = {
-#     "user": user,
-#     "password": password,
-#     "driver": "org.postgresql.Driver"
-# }
+# JDBC properties
+postgres_properties = {
+    "user": user,
+    "password": password,
+    "driver": "org.postgresql.Driver"
+}
 
-# # Save cleaned data to PostgreSQL
-# patients_df.write.jdbc(url=postgres_url, table="patients_table", mode="overwrite", properties=postgres_properties)
-# hospital_treatment_df.write.jdbc(url=postgres_url, table="hospital_treatment_table", mode="overwrite", properties=postgres_properties)
-# insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="overwrite", properties=postgres_properties)
-# medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="overwrite", properties=postgres_properties)
+# Save cleaned data to PostgreSQL
+patients_df.write.jdbc(url=postgres_url, table="patients_table", mode="overwrite", properties=postgres_properties)
+hospital_treatment_df.write.jdbc(url=postgres_url, table="hospital_treatment_table", mode="overwrite", properties=postgres_properties)
+insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="overwrite", properties=postgres_properties)
+medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="overwrite", properties=postgres_properties)
 
 # Save cleaned data to Hive tables
-patients_df.write.mode("overwrite").saveAsTable("medicalcost.db.patients_table")
-hospital_treatment_df.write.mode("overwrite").saveAsTable("medicalcost.db.hospital_treatment_table")
-insurance_df.write.mode("overwrite").saveAsTable("medicalcost.db.insurance_table")
-medical_cost_df.write.mode("overwrite").saveAsTable("medicalcost.db.medical_cost_table")
+patients_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.patients_table")
+hospital_treatment_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
+insurance_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.insurance_table")
+medical_cost_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
 patients_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_patient_csv)

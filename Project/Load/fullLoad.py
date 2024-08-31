@@ -95,10 +95,10 @@ insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="overwri
 medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="overwrite", properties=postgres_properties)
 
 # Save cleaned data to Hive tables
-patients_df.write.mode("overwrite").saveAsTable("julbatch.patients_table")
-hospital_treatment_df.write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
-insurance_df.write.mode("overwrite").saveAsTable("julbatch.insurance_table")
-medical_cost_df.write.mode("overwrite").saveAsTable("julbatch.medical_cost_table")
+patients_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.patients_table")
+hospital_treatment_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
+insurance_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.insurance_table")
+medical_cost_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
 patients_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_patient_csv)

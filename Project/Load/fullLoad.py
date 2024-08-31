@@ -95,10 +95,10 @@ medical_cost_df = medical_cost_df.dropDuplicates()
 # medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="overwrite", properties=postgres_properties)
 
 # Save cleaned data to Hive tables
-# patients_df.write.mode("overwrite").saveAsTable("medicalcost.db.patients_table")
-# hospital_treatment_df.write.mode("overwrite").saveAsTable("medicalcost.db.hospital_treatment_table")
-# insurance_df.write.mode("overwrite").saveAsTable("medicalcost.db.insurance_table")
-# medical_cost_df.write.mode("overwrite").saveAsTable("medicalcost.db.medical_cost_table")
+patients_df.write.mode("overwrite").saveAsTable("medicalcost.db.patients_table")
+hospital_treatment_df.write.mode("overwrite").saveAsTable("medicalcost.db.hospital_treatment_table")
+insurance_df.write.mode("overwrite").saveAsTable("medicalcost.db.insurance_table")
+medical_cost_df.write.mode("overwrite").saveAsTable("medicalcost.db.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
 patients_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_patient_csv)

@@ -53,6 +53,7 @@ medical_cost_schema = StructType([
     StructField("age", IntegerType()),
     StructField("sex", StringType()),
     StructField("bmi", FloatType()),
+    StructField("children", StringType())
     StructField("smoker", StringType()),
     StructField("region", StringType()),
     StructField("medical_cost", FloatType()),

@@ -66,18 +66,32 @@ hospital_treatment_df = spark.read.option("header", "true").schema(hospital_trea
 insurance_df = spark.read.option("header", "true").schema(insurance_schema).csv(insurance_csv)
 medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema).csv(medical_cost_csv)
 
+patients_df.show(10)
+patients_df.printSchema(10)
+print(f"Number of rows in patients_df:  {patients_df.count()}")
+hospital_treatment_df.show(10)
+hospital_treatment_df.printSchema(10)
+print(f"Number of rows in hospital_treatment_df:  {hospital_treatment_df.count()}")
+insurance_df.show(10)
+insurance_df.printSchema(10)
+print(f"Number of rows in insurance_df:  {insurance_df.count()}")
+medical_cost_df.show(10)
+medical_cost_df.printSchema(10)
+print(f"Number of rows in medical_cost_df:  {medical_cost_df.count()}")     
+
+
 # Remove duplicates
-patients_df = patients_df.dropDuplicates()
-hospital_treatment_df = hospital_treatment_df.dropDuplicates()
-insurance_df = insurance_df.dropDuplicates()
-medical_cost_df = medical_cost_df.dropDuplicates()
+# patients_df = patients_df.dropDuplicates()
+# hospital_treatment_df = hospital_treatment_df.dropDuplicates()
+# insurance_df = insurance_df.dropDuplicates()
+# medical_cost_df = medical_cost_df.dropDuplicates()
 
 # Perform incremental loading by using a condition or filter on the data
 # Example: Filter for only the latest records based on a date or unique identifier
 
 # Here, we simulate filtering logic; replace it with actual conditions as needed
 incremental_patients_df = patients_df  # Replace with filtering logic if needed
-incremental_hospital_treatment_df = hospital_treatment_df.filter(col("date_of_treatment") > "2024-01-01")  # Example filter
+incremental_hospital_treatment_df = hospital_treatment_df  # Example filter
 incremental_insurance_df = insurance_df  # Replace with filtering logic if needed
 incremental_medical_cost_df = medical_cost_df  # Replace with filtering logic if needed
 
@@ -112,6 +126,18 @@ incremental_patients_df.write.jdbc(url=postgres_url, table="patients_table", mod
 incremental_hospital_treatment_df.write.jdbc(url=postgres_url, table="hospital_treatment_table", mode="append", properties=postgres_properties)
 incremental_insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="append", properties=postgres_properties)
 incremental_medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="append", properties=postgres_properties)
+incremental_patients_df.show(10)
+incremental_patients_df.printSchema(10)
+print(f"Number of rows in incremental_patients_df:  {incremental_patients_df.count()}")
+incremental_hospital_treatment_df.show(10)
+incremental_hospital_treatment_df.printSchema(10)
+print(f"Number of rows in incremental_patients_df:  {incremental_hospital_treatment_df.count()}")
+incremental_insurance_df.show(10)
+incremental_insurance_df.printSchema(10)
+print(f"Number of rows in incremental_insurance_df: {incremental_insurance_df.count()}")
+incremental_medical_cost_df.show()
+incremental_medical_cost_df.printSchema()
+print(f"Number of rows in incremental_medical_cost_df: {incremental_medical_cost_df.count()}")
 
 # Save only top 10 records to Hive tables
 incremental_patients_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.patients_table")
@@ -124,6 +150,7 @@ incremental_patients_df.coalesce(1).write.mode("overwrite").option("header", "tr
 incremental_hospital_treatment_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_hospital_treatment_csv)
 incremental_insurance_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_insurance_csv)
 incremental_medical_cost_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_medical_cost_csv)
+
 
 # Stop the Spark session
 spark.stop()

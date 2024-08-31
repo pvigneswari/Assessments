@@ -68,16 +68,16 @@ medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema
 
 patients_df.show(10)
 patients_df.printSchema(10)
-print(f"Number of rows in patients_df:  {patients_df.count()}")
+print("Number of rows in patients_df:  {}".format(patients_df.count()))
 hospital_treatment_df.show(10)
 hospital_treatment_df.printSchema(10)
-print(f"Number of rows in hospital_treatment_df:  {hospital_treatment_df.count()}")
+print("Number of rows in hospital_treatment_df: {}".format(hospital_treatment_df.count()))
 insurance_df.show(10)
 insurance_df.printSchema(10)
-print(f"Number of rows in insurance_df:  {insurance_df.count()}")
+print("Number of rows in insurance_df: {}".format(insurance_df.count()))
 medical_cost_df.show(10)
 medical_cost_df.printSchema(10)
-print(f"Number of rows in medical_cost_df:  {medical_cost_df.count()}")     
+print("Number of rows in medical_cost_df: {}".format(medical_cost_df.count()))
 
 
 # Remove duplicates
@@ -128,25 +128,25 @@ incremental_insurance_df.write.jdbc(url=postgres_url, table="insurance_table", m
 incremental_medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="append", properties=postgres_properties)
 incremental_patients_df.show(10)
 incremental_patients_df.printSchema(10)
-print(f"Number of rows in incremental_patients_df:  {incremental_patients_df.count()}")
+print("Number of rows in incremental_patients_df:  {}".format(incremental_patients_df.count()))
 incremental_hospital_treatment_df.show(10)
 incremental_hospital_treatment_df.printSchema(10)
-print(f"Number of rows in incremental_patients_df:  {incremental_hospital_treatment_df.count()}")
+print("Number of rows in incremental_hospital_treatment_df:  {}".format(incremental_hospital_treatment_df.count()))
 incremental_insurance_df.show(10)
 incremental_insurance_df.printSchema(10)
-print(f"Number of rows in incremental_insurance_df: {incremental_insurance_df.count()}")
+print("Number of rows in incremental_insurance_df:  {}".format(incremental_insurance_df.count()))
 incremental_medical_cost_df.show()
 incremental_medical_cost_df.printSchema()
-print(f"Number of rows in incremental_medical_cost_df: {incremental_medical_cost_df.count()}")
+print("Number of rows in incremental_medical_cost_df:  {}".format(incremental_medical_cost_df.count()))
 
 # Save only top 10 records to Hive tables
-incremental_patients_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.patients_table")
+incremental_patients_df.limit(10).write.saveAsTable("julbatch.patients_table")
 incremental_hospital_treatment_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
 incremental_insurance_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.insurance_table")
 incremental_medical_cost_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
-incremental_patients_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_patient_csv)
+incremental_patients_df.coalesce(1).write.option("header", "true").csv(output_patient_csv)
 incremental_hospital_treatment_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_hospital_treatment_csv)
 incremental_insurance_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_insurance_csv)
 incremental_medical_cost_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_medical_cost_csv)

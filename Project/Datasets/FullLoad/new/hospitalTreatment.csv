@@ -1,0 +1,20 @@
+patient_id,treatment,treatment_cost,hospital,date_of_treatment
+P0002,Consultation,6303.67,City Clinic,2015-01-02
+P0003,Therapy,1837.69,Specialist Center,2015-01-03
+P0004,Surgery,7374.29,City Clinic,2015-01-04
+P0005,Consultation,5027.82,General Hospital,2015-01-05
+P0006,Consultation,15377.08,City Clinic,2015-01-06
+P0007,Consultation,2676.75,General Hospital,2015-01-07
+P0008,Consultation,3301.78,City Clinic,2015-01-08
+P0009,Therapy,5930.95,General Hospital,2015-01-09
+P0010,Consultation,6116.52,City Clinic,2015-01-10
+P0011,Therapy,17002.95,Regional Hospital,2015-01-11
+P0012,Medication,15930.03,City Clinic,2015-01-12
+P0013,Surgery,11783.39,City Clinic,2015-01-13
+P0014,Consultation,6127.48,Regional Hospital,2015-01-14
+P0015,Medication,6718.13,Regional Hospital,2015-01-15
+P0016,Surgery,12048.26,Regional Hospital,2015-01-16
+P0017,Surgery,14927.4,City Clinic,2015-01-17
+P0018,Surgery,7989.91,Regional Hospital,2015-01-18
+P0019,Medication,10436.46,General Hospital,2015-01-19
+P0020,Therapy,17816.65,Specialist Center,2015-01-20

@@ -60,12 +60,11 @@ medical_cost_schema = StructType([
     StructField("Patient_id", StringType())
 ])
 
-# Load the datasets
+# Load the new incremental datasets
 patients_df = spark.read.option("header", "true").schema(patient_schema).csv(patient_csv)
 hospital_treatment_df = spark.read.option("header", "true").schema(hospital_treatment_schema).csv(hospital_treatment_csv)
 insurance_df = spark.read.option("header", "true").schema(insurance_schema).csv(insurance_csv)
 medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema).csv(medical_cost_csv)
-
 patients_df.show(10)
 patients_df.printSchema()
 print("Number of rows in patients_df:  {}".format(patients_df.count()))
@@ -140,10 +139,10 @@ incremental_medical_cost_df.printSchema()
 print("Number of rows in incremental_medical_cost_df:  {}".format(incremental_medical_cost_df.count()))
 
 # Save only top 10 records to Hive tables
-incremental_patients_df.limit(10).write.mode("append").saveAsTable("julbatch.patients_table")
-incremental_hospital_treatment_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
-incremental_insurance_df.limit(10).write.mode("append").saveAsTable("julbatch.insurance_table")
-incremental_medical_cost_df.limit(10).write.mode("append").saveAsTable("julbatch.medical_cost_table")
+incremental_patients_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.patients_table")
+incremental_hospital_treatment_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.hospital_treatment_table")
+incremental_insurance_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.insurance_table")
+incremental_medical_cost_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
 

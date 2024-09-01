@@ -68,11 +68,56 @@ medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema
 patients_df.show()
 hospital_treatment_df.show()
 
+
+# Database connection parameters
+host = "ec2-18-132-73-146.eu-west-2.compute.amazonaws.com"  # Your PostgreSQL server address
+port = "5432"                                               # Your PostgreSQL port
+dbname = "testdb"                                           # Your database name
+user = "consultants"                                        # Your PostgreSQL username
+password = "WelcomeItc@2022"                                # Your PostgreSQL password
+
+# Construct JDBC URL
+postgres_url = "jdbc:postgresql://{0}:{1}/{2}".format(host, port, dbname)
+
+# JDBC properties
+postgres_properties = {
+    "user": user,
+    "password": password,
+    "driver": "org.postgresql.Driver"
+}
+
+# # Load existing data from PostgreSQL (if required for comparison or merging)
+# existing_patients_df = spark.read.jdbc(url=postgres_url, table="patients_table", properties=postgres_properties)
+# existing_hospital_treatment_df = spark.read.jdbc(url=postgres_url, table="hospital_treatment_table", properties=postgres_properties)
+# existing_insurance_df = spark.read.jdbc(url=postgres_url, table="insurance_table", properties=postgres_properties)
+# existing_medical_cost_df = spark.read.jdbc(url=postgres_url, table="medical_cost_table", properties=postgres_properties)
+
+
+
 # Perform any filtering or transformations needed for incremental data
 incremental_patients_df = patients_df  # Replace with filtering logic if needed
 incremental_hospital_treatment_df = hospital_treatment_df  # Example filter
 incremental_insurance_df = insurance_df  # Replace with filtering logic if needed
 incremental_medical_cost_df = medical_cost_df  # Replace with filtering logic if needed
+
+
+# Save incremental data to PostgreSQL
+incremental_patients_df.write.jdbc(url=postgres_url, table="patients_table", mode="append", properties=postgres_properties)
+incremental_hospital_treatment_df.write.jdbc(url=postgres_url, table="hospital_treatment_table", mode="append", properties=postgres_properties)
+incremental_insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="append", properties=postgres_properties)
+incremental_medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="append", properties=postgres_properties)
+incremental_patients_df.show(10)
+incremental_patients_df.printSchema()
+
+
+# Save only top 10 records to Hive tables
+incremental_patients_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.patients_table")
+incremental_hospital_treatment_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.hospital_treatment_table")
+incremental_insurance_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.insurance_table")
+incremental_medical_cost_df.limit(10).write.mode("append").option("header","true").saveAsTable("julbatch.medical_cost_table")
+
+
+
 
 # Read existing data from output folders if exists
 try:

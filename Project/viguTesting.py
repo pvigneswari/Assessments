@@ -80,26 +80,26 @@ try:
     incremental_patients_df = existing_patients_df.union(incremental_patients_df)
     incremental_patients_df.show()
 except:
-    print(f"No existing data found in {output_patient_csv}. Proceeding with incremental data only.")
+    print("No existing data found in", {output_patient_csv}, ". Proceeding with incremental data only.")
 
 try:
     existing_hospital_treatment_df = spark.read.option("header", "true").schema(hospital_treatment_schema).csv(output_hospital_treatment_csv)
     incremental_hospital_treatment_df = existing_hospital_treatment_df.union(incremental_hospital_treatment_df)
     incremental_hospital_treatment_df.show()
 except:
-    print(f"No existing data found in {output_hospital_treatment_csv}. Proceeding with incremental data only.")
+    print("No existing data found in ",{output_hospital_treatment_csv},". Proceeding with incremental data only.")
 
 try:
     existing_insurance_df = spark.read.option("header", "true").schema(insurance_schema).csv(output_insurance_csv)
     incremental_insurance_df = existing_insurance_df.union(incremental_insurance_df)
 except:
-    print(f"No existing data found in {output_insurance_csv}. Proceeding with incremental data only.")
+    print("No existing data found in ", {output_insurance_csv}, ". Proceeding with incremental data only.")
 
 try:
     existing_medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema).csv(output_medical_cost_csv)
     incremental_medical_cost_df = existing_medical_cost_df.union(incremental_medical_cost_df)
 except:
-    print(f"No existing data found in {output_medical_cost_csv}. Proceeding with incremental data only.")
+    print("No existing data found in", {output_medical_cost_csv},". Proceeding with incremental data only.")
 
 # Coalesce to ensure a single output partition for each DataFrame
 patients_cleaned_df_single_partition = incremental_patients_df.coalesce(1)

@@ -10,19 +10,19 @@ spark = SparkSession.builder \
     .getOrCreate()
 
 # # Check if the correct number of arguments are provided
-# if len(sys.argv) != 9:
-#     print("Usage: script.py <patient_csv> <hospital_treatment_csv> <insurance_csv> <medical_cost_csv> <output_patient_csv> <output_hospital_treatment_csv> <output_insurance_csv> <output_medical_cost_csv>")
-#     sys.exit(1)
+if len(sys.argv) != 9:
+    print("Usage: script.py <patient_csv> <hospital_treatment_csv> <insurance_csv> <medical_cost_csv> <output_patient_csv> <output_hospital_treatment_csv> <output_insurance_csv> <output_medical_cost_csv>")
+    sys.exit(1)
 
 # Assign command-line arguments to variables
 patient_csv = sys.argv[1]
-# hospital_treatment_csv = sys.argv[2]
-# insurance_csv = sys.argv[3]
-# medical_cost_csv = sys.argv[4]
-output_patient_csv = sys.argv[2]
-# output_hospital_treatment_csv = sys.argv[6]
-# output_insurance_csv = sys.argv[7]
-# output_medical_cost_csv = sys.argv[8]
+hospital_treatment_csv = sys.argv[2]
+insurance_csv = sys.argv[3]
+medical_cost_csv = sys.argv[4]
+output_patient_csv = sys.argv[5]
+output_hospital_treatment_csv = sys.argv[6]
+output_insurance_csv = sys.argv[7]
+output_medical_cost_csv = sys.argv[8]
 
 # Define schemas based on the provided files
 patient_schema = StructType([
@@ -33,38 +33,38 @@ patient_schema = StructType([
     StructField("Email", StringType())
 ])
 
-# hospital_treatment_schema = StructType([
-#     StructField("Patient_id", StringType()),
-#     StructField("treatment", StringType()),
-#     StructField("treatment_cost", FloatType()),
-#     StructField("hospital", StringType()),
-#     StructField("date_of_treatment", StringType())
-# ])
+hospital_treatment_schema = StructType([
+    StructField("Patient_id", StringType()),
+    StructField("treatment", StringType()),
+    StructField("treatment_cost", FloatType()),
+    StructField("hospital", StringType()),
+    StructField("date_of_treatment", StringType())
+])
 
-# insurance_schema = StructType([
-#     StructField("Patient_id", StringType()),
-#     StructField("insurance_company", StringType()),
-#     StructField("policy_number", StringType()),
-#     StructField("coverage_amount", FloatType()),
-#     StructField("insurance_cost", FloatType())
-# ])
+insurance_schema = StructType([
+    StructField("Patient_id", StringType()),
+    StructField("insurance_company", StringType()),
+    StructField("policy_number", StringType()),
+    StructField("coverage_amount", FloatType()),
+    StructField("insurance_cost", FloatType())
+])
 
-# medical_cost_schema = StructType([
-#     StructField("age", IntegerType()),
-#     StructField("sex", StringType()),
-#     StructField("bmi", FloatType()),
-#     StructField("children", StringType()),
-#     StructField("smoker", StringType()),
-#     StructField("region", StringType()),
-#     StructField("medical_cost", FloatType()),
-#     StructField("Patient_id", StringType())
-# ])
+medical_cost_schema = StructType([
+    StructField("age", IntegerType()),
+    StructField("sex", StringType()),
+    StructField("bmi", FloatType()),
+    StructField("children", StringType()),
+    StructField("smoker", StringType()),
+    StructField("region", StringType()),
+    StructField("medical_cost", FloatType()),
+    StructField("Patient_id", StringType())
+])
 
 # Load the datasets
 patients_df = spark.read.option("header", "true").schema(patient_schema).csv(patient_csv)
-# hospital_treatment_df = spark.read.option("header", "true").schema(hospital_treatment_schema).csv(hospital_treatment_csv)
-# insurance_df = spark.read.option("header", "true").schema(insurance_schema).csv(insurance_csv)
-# medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema).csv(medical_cost_csv)
+hospital_treatment_df = spark.read.option("header", "true").schema(hospital_treatment_schema).csv(hospital_treatment_csv)
+insurance_df = spark.read.option("header", "true").schema(insurance_schema).csv(insurance_csv)
+medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema).csv(medical_cost_csv)
 
 # Remove duplicates
 # patients_df = patients_df.dropDuplicates()
@@ -91,21 +91,21 @@ postgres_properties = {
 
 # Save cleaned data to PostgreSQL
 patients_df.write.jdbc(url=postgres_url, table="patients_table", mode="overwrite", properties=postgres_properties)
-# hospital_treatment_df.write.jdbc(url=postgres_url, table="hospital_treatment_table", mode="overwrite", properties=postgres_properties)
-# insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="overwrite", properties=postgres_properties)
-# medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="overwrite", properties=postgres_properties)
+hospital_treatment_df.write.jdbc(url=postgres_url, table="hospital_treatment_table", mode="overwrite", properties=postgres_properties)
+insurance_df.write.jdbc(url=postgres_url, table="insurance_table", mode="overwrite", properties=postgres_properties)
+medical_cost_df.write.jdbc(url=postgres_url, table="medical_cost_table", mode="overwrite", properties=postgres_properties)
 
 # Save cleaned data to Hive tables
 patients_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.patients_table")
-# hospital_treatment_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
-# insurance_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.insurance_table")
-# medical_cost_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.medical_cost_table")
+hospital_treatment_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.hospital_treatment_table")
+insurance_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.insurance_table")
+medical_cost_df.limit(10).write.mode("overwrite").saveAsTable("julbatch.medical_cost_table")
 
 # Save cleaned data as CSV to provided output paths
 patients_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_patient_csv)
-# hospital_treatment_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_hospital_treatment_csv)
-# insurance_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_insurance_csv)
-# medical_cost_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_medical_cost_csv)
+hospital_treatment_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_hospital_treatment_csv)
+insurance_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_insurance_csv)
+medical_cost_df.coalesce(1).write.mode("overwrite").option("header", "true").csv(output_medical_cost_csv)
 patients_df.show()
 
 # Stop the Spark session

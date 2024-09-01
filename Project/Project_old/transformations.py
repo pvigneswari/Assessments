@@ -54,8 +54,8 @@ if __name__ == "__main__":
 
         # Step 5: Show the results
         age_group_analysis.show()
-        print("\n--- Trend Analysis of Medical Costs by Age ---")
-        print("• Analyze how medical costs vary across different age groups")
+        print("\n Trend Analysis of Medical Costs by Age ---")
+        print("- Analyze how medical costs vary across different age groups")
         print("  to identify which age groups incur the highest expenses")
         print("  and for which types of services.\n")
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
         print("Average medical costs by BMI category:")
         bmi_cost_analysis.show()
         print("\n--- Impact of BMI on Medical Costs ---")
-        print("• Investigate the correlation between BMI and medical costs")
+        print(" Investigate the correlation between BMI and medical costs")
         print("  to understand how weight management programs could")
         print("  potentially reduce healthcare expenses.\n")
 
@@ -113,7 +113,7 @@ if __name__ == "__main__":
         print("Medical costs comparison between smokers and non-smokers:")
         smoker_cost_analysis.show()
         print("\n--- Smoking and Medical Costs ---")
-        print("• Compare the medical costs of smokers versus non-smokers")
+        print(" Compare the medical costs of smokers versus non-smokers")
         print("  to quantify the financial impact of smoking on healthcare systems.\n")
 
         #########################################################################
@@ -130,7 +130,7 @@ if __name__ == "__main__":
         print("Insurance Premium Estimation based on risk factors:")
         premium_estimation_df.show()   
         print("\n--- Insurance Premium Estimation ---")
-        print("• Use the data to calculate potential insurance premiums based on risk factors")
+        print(" Use the data to calculate potential insurance premiums based on risk factors")
         print("  such as age, smoking status, and region to ensure fair and accurate")
         print("  pricing of insurance policies.\n")
 
@@ -152,7 +152,7 @@ if __name__ == "__main__":
         print("High-Cost Patient Analysis - Patients with exceptionally high medical costs:")
         high_cost_analysis_df.show()
         print("\n--- High-Cost Patient Analysis ---")
-        print("• Identify patients with exceptionally high medical costs and analyze")
+        print(" Identify patients with exceptionally high medical costs and analyze")
         print("  the contributing factors to target interventions for cost reduction.\n")
 
         ############################################################################################

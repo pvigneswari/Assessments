@@ -24,12 +24,12 @@ if __name__ == "__main__":
         
         database_name = "default"  # Use the default Hive database or specify your own
 
-        spark.sql(f"use {database_name}")
+        spark.sql("use " + database_name)
         # Execute the SQL command to create the table
         # spark.sql("show tables").show()
 
         fact_table_name = "fact_medical_data"
-        fact_df = spark.sql(f"SELECT * FROM {fact_table_name}")
+        fact_df = spark.sql("SELECT * FROM " + fact_table_name)
 
 
         # Step 3: Define age groups using DataFrame transformations
@@ -93,8 +93,6 @@ if __name__ == "__main__":
         # Step 6: Calculate the correlation between BMI and medical costs
         correlation_value = fact_df.stat.corr("bmi", "medical_cost")
 
-        # Step 7: Show the correlation result
-        print(f"The correlation between BMI and medical costs is: {correlation_value:.2f}")
 
 
         ########################################################################

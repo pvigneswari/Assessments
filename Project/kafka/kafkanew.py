@@ -47,7 +47,7 @@ formattedDF = streamingDF \
 
 # Filter the streaming DataFrame to include only "failed" transactions and add watermarking
 failed_transactions_df = formattedDF \
-    .filter(f.col("Treatment_Status") == "Failed") \
+    .filter(f.col("Treatment_Status") == "Unprocessed") \
     .withWatermark("timestamp", "10 minutes")  # Add watermarking
 
 # Perform real-time analytics (e.g., display count of failed transactions)

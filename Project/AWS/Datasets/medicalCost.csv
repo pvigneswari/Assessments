@@ -1,0 +1,6 @@
+age,sex,bmi,children,smoker,region,medical_cost,patient_id
+35,male,29.2,4,no,southwest,5635.74,P1001
+22,female,27.6,2,no,southeast,4528.08,P1002
+43,female,30.6,3,yes,northeast,18295.84,P1003
+51,male,29.4,1,no,southeast,6569.16,P1004
+52,female,38.4,5,yes,northwest,19116.27,P1005

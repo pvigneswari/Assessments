@@ -1,0 +1,68 @@
+SQL 
+1.	Types of commands and their examples.
+	Data Definition Language(DDL) : Create, Alter, Drop, Truncate 
+	1:	CREATE TABLE employees (
+    	id INT PRIMARY KEY,
+	name VARCHAR(100),
+    	position VARCHAR(100),
+    	salary DECIMAL(10, 2)
+	);
+	2: ALTER TABLE employees ADD COLUMN email VARCHAR(100);
+	3: DROP TABLE employees;
+	4: TRUNCATE TABLE employees;
+	Data Manipulation Language(DML) : Insert, Update, Delete
+	1: INSERT INTO employees (id, name, position, salary) VALUES (1, 'Alice', 'Manager', 75000.00);
+	2: UPDATE employees SET salary = 80000.00 WHERE id = 1;
+	3: DELETE FROM employees WHERE id = 1;
+	Data Query Language(DQL): Select
+	1: SELECT * FROM employees;
+	Data Control Language(DCL):Grant, Revoke
+	1: GRANT SELECT, INSERT ON employees TO 'username';
+	2: REVOKE SELECT, INSERT ON employees FROM 'username';
+	Transaction Control Language(TCL): Commit, Rollback, Savepoint, Release Savepoint, Rollback to Savepoint
+	1: Commit:COMMIT;
+	2: Rollback:ROLLBACK;
+	3: SAVEPOINT savepoint1;
+	4: RELEASE SAVEPOINT savepoint1;
+	5: ROLLBACK TO SAVEPOINT savepoint1;
+
+2.	What is Normalization and denormalization?
+	Normalization : Normalization is a process of organizing data in a database to reduce redundancy and improve data integrity.
+	Denormalization : The process of combining normalized tables into larger tables to improve read performance
+3.	Explain 1NF, 2NF, 3NF.
+	1NF : Using row order to convey information is not permitted​
+	Mixing data types within the same column is not permitted​
+	Having a table without a primary key is not permitted​
+	Repeating groups are not allowed.
+	2NF : Achieved when it is in 1NF​
+	Each non-key attributes are fully dependent on the primary key.
+	3NF : Achieved when it is in 2NF​
+	All the attributes are functionally dependent only on the primary key
+4.	Share use case where you had to do denormalization in database..
+5.	What is primary key and foreign key?
+6.	what is alternate and candidate key
+?
+7.	What are window functions?
+8.	Explain Ranking Functions? GIven a small table , write the output.
+9.	Types of Joins? With example and usecase. All the number of records return and exact records.
+10.	Use case when self join is required.
+11.	What is subquery?
+12.	What is corelated subquery?
+13.	What is CTE? 
+14.	What is derived table?
+15.	Find third highest employee based on salary?
+16.	Find third highest employee based on salary  per department?
+17.	How to find duplicate values in a single column?
+18.	How to find duplicate values in a multiple column?
+19.	What are ACID properties?
+20.	Diff between union and union all
+21.	Diff between primary key
+ and unique key
+
+22.	Diff between truncate and delete
+23.	Diff between having and where
+24.	SQL query execution order.
+25.	What are indexes? Types of Indexes and their differences.
+26.	What is surrogate key
+? Give example where you used it and how.
+27.	Ways to optimize sql query?

@@ -66,6 +66,14 @@ hospital_treatment_df = spark.read.option("header", "true").schema(hospital_trea
 insurance_df = spark.read.option("header", "true").schema(insurance_schema).csv(insurance_csv)
 medical_cost_df = spark.read.option("header", "true").schema(medical_cost_schema).csv(medical_cost_csv)
 
+# Clean the data: Example cleaning steps
+# cleaned_medical_cost_df = medical_cost_df \
+#     .na.drop("all") \  # Remove rows where all columns are null
+#     .filter(col("Patient_id").isNotNull()) \  # Ensure critical fields like "Patient_id" are not null
+#     .withColumn("medical_cost", col("medical_cost").cast("Integer")) \  # Change datatype to integer
+#     .withColumn("date_of_treatment", to_timestamp(col("date_of_treatment"), "yyyy-MM-dd"))  # Convert date_of_treatment to Timestamp
+
+
 # Remove duplicates
 # patients_df = patients_df.dropDuplicates()
 # hospital_treatment_df = hospital_treatment_df.dropDuplicates()

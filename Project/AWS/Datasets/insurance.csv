@@ -1,0 +1,11 @@
+patient_id,insurance_company,policy_number,coverage_amount,insurance_cost
+P1001,Cigna,xY36040,11107.39,7429.41
+P1002,Kaiser Permanente,ZE38703,45628.71,7486.38
+P1003,UnitedHealthcare,rR94844,17386.03,8626.96
+P1004,Cigna,PX92994,18308.17,6759.36
+P1005,UnitedHealthcare,aO09228,44386.26,4247.35
+P1006,Cigna,xH70802,44216.86,6936.49
+P1007,Aetna,Li72343,46519.57,5097.43
+P1008,Kaiser Permanente,Xy51960,40390.76,3104.96
+P1009,Kaiser Permanente,Sa64871,23952,7787.54
+P1010,Blue Cross,Ww90498,13977.71,8277.13

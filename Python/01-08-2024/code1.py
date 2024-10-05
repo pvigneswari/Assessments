@@ -7,6 +7,7 @@ def temp_degrees(arr):
         city_data = (city[0], far)
   
         results.append(city_data)
+        
     return results
               
 print(temp_degrees(input))
